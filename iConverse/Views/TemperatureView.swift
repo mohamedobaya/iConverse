@@ -15,7 +15,7 @@ struct TemperatureView: View {
         converseTemperature(value: inputTemperature, from: selectedMainTemperatureUnit, to: selectedTargetTemperatureUnit)
     }
     
-    @FocusState var isUnitInputFocused: Bool
+    @FocusState.Binding var isUnitInputFocused: Bool
     
     var body: some View {
         Section{
@@ -40,7 +40,8 @@ struct TemperatureView: View {
 }
 
 #Preview {
+    @FocusState var isUnitInputFocused: Bool
     Form {
-        TemperatureView()
+        TemperatureView(isUnitInputFocused: $isUnitInputFocused)
     }
 }

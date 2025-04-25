@@ -15,7 +15,7 @@ struct VolumeView: View {
         converseVolume(value: inputVolume, from: selectedMainVolumeUnit, to: selectedTargetVolumeUnit)
     }
     
-    @FocusState var isUnitInputFocused: Bool
+    @FocusState.Binding var isUnitInputFocused: Bool
     
     var body: some View {
         Section{
@@ -40,7 +40,8 @@ struct VolumeView: View {
 }
 
 #Preview {
+    @FocusState var isUnitInputFocused: Bool
     Form {
-        VolumeView()
+        VolumeView(isUnitInputFocused: $isUnitInputFocused)
     }
 }

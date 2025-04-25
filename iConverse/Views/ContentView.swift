@@ -11,18 +11,20 @@ struct ContentView: View {
     @State private var selectedUnitType = "length"
     let units = ["length", "volume", "temperature", "time"]
     
+    @FocusState var isUnitInputFocused: Bool
+    
     @ViewBuilder var unitView: some View {
         switch selectedUnitType {
         case "length":
-            LengthView()
+            LengthView(isUnitInputFocused: $isUnitInputFocused)
         case "temperature":
-            TemperatureView()
+            TemperatureView(isUnitInputFocused: $isUnitInputFocused)
         case "volume":
-            VolumeView()
+            VolumeView(isUnitInputFocused: $isUnitInputFocused)
         case "time":
-            TimeView()
+            TimeView(isUnitInputFocused: $isUnitInputFocused)
         default:
-            LengthView()
+            LengthView(isUnitInputFocused: $isUnitInputFocused)
         }
     }
     
@@ -40,6 +42,13 @@ struct ContentView: View {
             }
             .navigationTitle("iConverse")
             .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                if isUnitInputFocused {
+                    Button("Done") {
+                        isUnitInputFocused = false
+                    }
+                }
+            }
         }
     }
 }

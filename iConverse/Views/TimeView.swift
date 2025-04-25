@@ -15,7 +15,7 @@ struct TimeView: View {
         converseTime(value: inputTime, from: selectedMainTimeUnit, to: selectedTargetTimeUnit)
     }
     
-    @FocusState var isUnitInputFocused: Bool
+    @FocusState.Binding var isUnitInputFocused: Bool
     
     var body: some View {
         Section{
@@ -27,6 +27,7 @@ struct TimeView: View {
             TextField("value", value: $inputTime, format: .number)
                 .keyboardType(.decimalPad)
                 .focused($isUnitInputFocused)
+                
         }
         Section{
             Picker("To", selection: $selectedTargetTimeUnit) {
@@ -40,7 +41,8 @@ struct TimeView: View {
 }
 
 #Preview {
+    @FocusState var isUnitInputFocused: Bool
     Form {
-        TimeView()
+        TimeView(isUnitInputFocused: $isUnitInputFocused)
     }
 }

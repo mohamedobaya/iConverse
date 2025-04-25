@@ -8,15 +8,15 @@
 import SwiftUI
 
 struct LengthView: View {
-    @State private var selectedMainLengthUnit: LengthUnit = .meters
-    @State private var selectedTargetLengthUnit: LengthUnit = .kilometers
+    @State var selectedMainLengthUnit: LengthUnit = .meters
+    @State var selectedTargetLengthUnit: LengthUnit = .kilometers
     @State private var inputLength = 0.0
     private var outputLength: Double {
         converseLength(value: inputLength, from: selectedMainLengthUnit, to: selectedTargetLengthUnit)
     }
     
-    @FocusState var isUnitInputFocused: Bool
-    
+    @FocusState.Binding var isUnitInputFocused: Bool
+
     var body: some View {
         Section{
             Picker("From", selection: $selectedMainLengthUnit) {
@@ -36,11 +36,14 @@ struct LengthView: View {
             }
             Text(outputLength, format: .number)
         }
+        
+
     }
 }
 
 #Preview {
+    @FocusState var isUnitInputFocused: Bool
     Form {
-        LengthView()
+        LengthView(isUnitInputFocused: $isUnitInputFocused)
     }
 }
