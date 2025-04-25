@@ -7,8 +7,6 @@
 
 import Foundation
 
-let lengthUnits = ["meters", "kilometers", "feet", "yards", "miles"]
-
 enum LengthUnit: String, CaseIterable {
     case meters = "meters"
     case kilometers = "kilometers"

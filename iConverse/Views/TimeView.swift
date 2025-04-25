@@ -8,11 +8,39 @@
 import SwiftUI
 
 struct TimeView: View {
+    @State private var selectedMainTimeUnit: TimeUnit = .seconds
+    @State private var selectedTargetTimeUnit: TimeUnit = .minutes
+    @State private var inputTime = 0.0
+    private var outputTime: Double {
+        converseTime(value: inputTime, from: selectedMainTimeUnit, to: selectedTargetTimeUnit)
+    }
+    
+    @FocusState var isUnitInputFocused: Bool
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Section{
+            Picker("From", selection: $selectedMainTimeUnit) {
+                ForEach(TimeUnit.allCases, id: \.self) {
+                    Text($0.rawValue)
+                }
+            }
+            TextField("value", value: $inputTime, format: .number)
+                .keyboardType(.decimalPad)
+                .focused($isUnitInputFocused)
+        }
+        Section{
+            Picker("To", selection: $selectedTargetTimeUnit) {
+                ForEach(TimeUnit.allCases, id: \.self) {
+                    Text($0.rawValue)
+                }
+            }
+            Text(outputTime, format: .number)
+        }
     }
 }
 
 #Preview {
-    TimeView()
+    Form {
+        TimeView()
+    }
 }

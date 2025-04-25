@@ -8,33 +8,35 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var selectedUnitType = "length"
+    let units = ["length", "volume", "temperature", "time"]
     
-    @State private var selectedMainLengthUnit: LengthUnit = .meters
-    @State private var selectedTargetLengthUnit: LengthUnit = .kilometers
-    @State private var inputLength = 0.0
-    private var outputLength: Double {
-        converseLength(value: inputLength, from: selectedMainLengthUnit, to: selectedTargetLengthUnit)
+    @ViewBuilder var unitView: some View {
+        switch selectedUnitType {
+        case "length":
+            LengthView()
+        case "temperature":
+            TemperatureView()
+        case "volume":
+            VolumeView()
+        case "time":
+            TimeView()
+        default:
+            LengthView()
+        }
     }
     
     var body: some View {
         NavigationStack {
             Form {
-                Section{
-                    Picker("From", selection: $selectedMainLengthUnit) {
-                        ForEach(LengthUnit.allCases, id: \.self) { lengthUnit in
-                            Text(lengthUnit.rawValue)
+                Section {
+                    Picker("Unit Type", selection: $selectedUnitType) {
+                        ForEach(units, id: \.self) {
+                            Text($0)
                         }
                     }
-                    TextField("value", value: $inputLength, format: .number)
                 }
-                Section{
-                    Picker("To", selection: $selectedTargetLengthUnit) {
-                        ForEach(LengthUnit.allCases, id: \.self) { lengthUnit in
-                            Text(lengthUnit.rawValue)
-                        }
-                    }
-                    Text(outputLength, format: .number)
-                }
+                unitView
             }
             .navigationTitle("iConverse")
             .navigationBarTitleDisplayMode(.inline)
