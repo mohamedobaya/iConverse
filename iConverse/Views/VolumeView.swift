@@ -17,6 +17,21 @@ struct VolumeView: View {
     
     @FocusState.Binding var isUnitInputFocused: Bool
     
+    private var unitText: String {
+        switch selectedTargetVolumeUnit {
+        case .milliliters:
+            "mL"
+        case .liters:
+            "L"
+        case .cups:
+            "c"
+        case .pints:
+            "pt"
+        case .gallons:
+            "gal"
+        }
+    }
+    
     var body: some View {
         Section{
             Picker("From", selection: $selectedMainVolumeUnit) {
@@ -34,7 +49,7 @@ struct VolumeView: View {
                     Text($0.rawValue)
                 }
             }
-            Text(outputVolume, format: .number)
+            Text("\(Int(outputVolume)) \(unitText)")
         }
     }
 }

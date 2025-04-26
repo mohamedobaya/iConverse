@@ -17,6 +17,17 @@ struct TemperatureView: View {
     
     @FocusState.Binding var isUnitInputFocused: Bool
     
+    private var unitText: String {
+        switch selectedTargetTemperatureUnit {
+        case .celsius:
+            "℃"
+        case .fahrenheit:
+            "℉"
+        case .kelvin:
+            "K"
+        }
+    }
+    
     var body: some View {
         Section{
             Picker("From", selection: $selectedMainTemperatureUnit) {
@@ -34,7 +45,7 @@ struct TemperatureView: View {
                     Text(lengthUnit.rawValue)
                 }
             }
-            Text(outputTemperature, format: .number)
+            Text("\(Int(outputTemperature)) \(unitText)")
         }
     }
 }

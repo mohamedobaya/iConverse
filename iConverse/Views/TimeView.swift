@@ -17,6 +17,19 @@ struct TimeView: View {
     
     @FocusState.Binding var isUnitInputFocused: Bool
     
+    private var unitText: String {
+        switch selectedTargetTimeUnit {
+        case .seconds:
+            "sec"
+        case .minutes:
+            "min"
+        case .hours:
+            "hr"
+        case .days:
+            "days"
+        }
+    }
+    
     var body: some View {
         Section{
             Picker("From", selection: $selectedMainTimeUnit) {
@@ -35,7 +48,7 @@ struct TimeView: View {
                     Text($0.rawValue)
                 }
             }
-            Text(outputTime, format: .number)
+            Text("\(Int(outputTime)) \(unitText)")
         }
     }
 }

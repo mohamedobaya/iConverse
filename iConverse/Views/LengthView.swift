@@ -16,7 +16,22 @@ struct LengthView: View {
     }
     
     @FocusState.Binding var isUnitInputFocused: Bool
-
+    
+    private var unitText: String {
+        switch selectedTargetLengthUnit {
+        case .meters:
+            "m"
+        case .kilometers:
+            "km"
+        case .feet:
+            "ft"
+        case .yards:
+            "yd"
+        case .miles:
+            "mi"
+        }
+    }
+    
     var body: some View {
         Section{
             Picker("From", selection: $selectedMainLengthUnit) {
@@ -34,7 +49,7 @@ struct LengthView: View {
                     Text(lengthUnit.rawValue)
                 }
             }
-            Text(outputLength, format: .number)
+            Text("\(Int(outputLength)) \(unitText)")
         }
         
 
